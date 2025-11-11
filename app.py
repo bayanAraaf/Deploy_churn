@@ -20,19 +20,25 @@ Upload data pelanggan baru atau masukkan data secara manual untuk melihat hasil 
 # ===========================
 # 2. Load Model
 # ===========================
+# ===========================
+# 2. Load Model (versi aman untuk deploy)
+# ===========================
+import os
+
 @st.cache_resource
 def load_model():
-    # TODO: Simpan pipeline penuh, bukan model doang
-    model = joblib.load("model_rf.pkl")
+    base_dir = os.path.dirname(__file__)
+    model_path = os.path.join(base_dir, "model_rf.pkl")
+
+    if not os.path.exists(model_path):
+        st.error("⚠️ Model belum ditemukan. Pastikan file `model_rf.pkl` ada di folder yang sama dengan app.py.")
+        st.stop()
+
+    model = joblib.load(model_path)
     return model
 
-
-try:
-    model = load_model()
-    st.success("✅ Model berhasil dimuat.")
-except Exception as e:
-    st.error("⚠️ Model belum ditemukan. Pastikan file `.pkl` sudah ada di folder yang sama.")
-    st.stop()
+model = load_model()
+st.success("✅ Model berhasil dimuat.")
 
 # ===========================
 # 3. Input Data
