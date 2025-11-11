@@ -28,10 +28,10 @@ import os
 @st.cache_resource
 def load_model():
     base_dir = os.path.dirname(__file__)
-    model_path = os.path.join(base_dir, "model_rf.pkl")
+    model_path = os.path.join(base_dir, "churn_model.pkl")
 
     if not os.path.exists(model_path):
-        st.error("⚠️ Model belum ditemukan. Pastikan file `model_rf.pkl` ada di folder yang sama dengan app.py.")
+        st.error("⚠️ Model belum ditemukan. Pastikan file `churn_model.pkl` ada di folder yang sama dengan app.py.")
         st.stop()
 
     model = joblib.load(model_path)
