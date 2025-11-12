@@ -17,16 +17,14 @@ Model terbaik yang digunakan adalah **Random Forest** dengan performa tinggi pad
 Upload data pelanggan baru atau masukkan data secara manual untuk melihat hasil prediksi.
 """)
 
-# ===========================
-# 2. Load Model
-# ===========================
+
 # ===========================
 # 2. Load Model (versi aman untuk deploy)
 # ===========================
 import os
 
 @st.cache_resource
-def load_model():
+def load_models():
     base_dir = os.path.dirname(__file__)
     model_path = os.path.join(base_dir, "churn_model.pkl")
 
@@ -34,11 +32,12 @@ def load_model():
         st.error("⚠️ Model belum ditemukan. Pastikan file `churn_model.pkl` ada di folder yang sama dengan app.py.")
         st.stop()
 
-    model = joblib.load(model_path)
-    return model
+    models = joblib.load(model_path)
+    return models
 
-model = load_model()
+models = load_models()
 st.success("✅ Model berhasil dimuat.")
+
 
 # ===========================
 # 3. Input Data
@@ -76,25 +75,34 @@ else:
         "Contract": [contract]
     })
 
+
 # ===========================
 # 4. Prediksi
 # ===========================
+st.sidebar.header("Pilih Model")
+model_name = st.sidebar.selectbox("Pilih model:", ["Random Forest (rm)", "Logistic Regression (logreg)"])
+
+if model_name.startswith("Random"):
+    model = models["rm"]
+else:
+    model = models["logreg"]
+
 if st.button("🔍 Prediksi Churn"):
-    # TODO: Pastikan urutan dan preprocessing fitur sama dengan yang kamu pakai di training
     try:
         prediction = model.predict(data)
         proba = model.predict_proba(data)[:, 1]
 
-        result = "Churn ❌" if prediction[0] == 0 else "Tidak Churn ✅"
+        result = "Churn ❌" if prediction[0] == 1 else "Tidak Churn ✅"
         st.success(f"**Hasil Prediksi:** {result}")
         st.metric(label="Probabilitas Churn", value=f"{proba[0]*100:.2f}%")
 
     except Exception as e:
         st.error(f"Gagal melakukan prediksi: {e}")
 
+
 # ===========================
 # 5. Footer
 # ===========================
 st.markdown("---")
-st.caption("Dibuat untuk Ujian BNSP Associate Data Science — oleh [Nama Kamu]")
+st.caption("Dibuat untuk Ujian BNSP Associate Data Science — oleh Bayan Araaf")
 
