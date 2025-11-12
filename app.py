@@ -104,7 +104,6 @@ else:
         "MonthlyCharges": [monthly_charges],
         "TotalCharges": [total_charges]
     })
-s
 
 # ===========================
 # 4. Prediksi
