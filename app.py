@@ -59,22 +59,52 @@ if input_mode == "Upload CSV":
 else:
     st.subheader("✏️ Masukkan Data Secara Manual")
 
-    # TODO: Ganti daftar fitur di bawah sesuai dataset kamu
+    # Semua fitur yang dibutuhkan model
     gender = st.selectbox("Gender", ["Male", "Female"])
+    senior_citizen = st.selectbox("Senior Citizen", [0, 1])
+    partner = st.selectbox("Partner", ["Yes", "No"])
+    dependents = st.selectbox("Dependents", ["Yes", "No"])
+    phone_service = st.selectbox("Phone Service", ["Yes", "No"])
+    multiple_lines = st.selectbox("Multiple Lines", ["No phone service", "No", "Yes"])
+    internet_service = st.selectbox("Internet Service", ["DSL", "Fiber optic", "No"])
+    online_security = st.selectbox("Online Security", ["No internet service", "No", "Yes"])
+    online_backup = st.selectbox("Online Backup", ["No internet service", "No", "Yes"])
+    device_protection = st.selectbox("Device Protection", ["No internet service", "No", "Yes"])
+    tech_support = st.selectbox("Tech Support", ["No internet service", "No", "Yes"])
+    streaming_tv = st.selectbox("Streaming TV", ["No internet service", "No", "Yes"])
+    streaming_movies = st.selectbox("Streaming Movies", ["No internet service", "No", "Yes"])
+    contract = st.selectbox("Contract", ["Month-to-month", "One year", "Two year"])
+    paperless_billing = st.selectbox("Paperless Billing", ["Yes", "No"])
+    payment_method = st.selectbox("Payment Method", [
+        "Electronic check", "Mailed check", "Bank transfer (automatic)", "Credit card (automatic)"
+    ])
     tenure = st.number_input("Tenure (lama berlangganan)", 0, 72, 12)
     monthly_charges = st.number_input("Monthly Charges", 0.0, 200.0, 70.0)
     total_charges = st.number_input("Total Charges", 0.0, 10000.0, 1500.0)
-    contract = st.selectbox("Contract", ["Month-to-month", "One year", "Two year"])
 
-    # Buat dataframe dari input manual
+    # Bentuk dataframe sesuai fitur training
     data = pd.DataFrame({
         "gender": [gender],
+        "SeniorCitizen": [senior_citizen],
+        "Partner": [partner],
+        "Dependents": [dependents],
+        "PhoneService": [phone_service],
+        "MultipleLines": [multiple_lines],
+        "InternetService": [internet_service],
+        "OnlineSecurity": [online_security],
+        "OnlineBackup": [online_backup],
+        "DeviceProtection": [device_protection],
+        "TechSupport": [tech_support],
+        "StreamingTV": [streaming_tv],
+        "StreamingMovies": [streaming_movies],
+        "Contract": [contract],
+        "PaperlessBilling": [paperless_billing],
+        "PaymentMethod": [payment_method],
         "tenure": [tenure],
         "MonthlyCharges": [monthly_charges],
-        "TotalCharges": [total_charges],
-        "Contract": [contract]
+        "TotalCharges": [total_charges]
     })
-
+s
 
 # ===========================
 # 4. Prediksi
