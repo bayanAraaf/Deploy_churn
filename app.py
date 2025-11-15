@@ -52,15 +52,14 @@ if input_mode == "Upload CSV":
         data = pd.read_csv(uploaded_file)
         st.subheader("📁 Data yang Diupload")
         st.dataframe(data.head())
+    if input_mode == "Upload CSV" and data.isnull().any().any():
+      st.warning("⚠️ Data mengandung nilai kosong. Pastikan data sudah bersih atau gunakan template yang sesuai.")
     else:
         st.warning("Upload file CSV untuk melanjutkan.")
         st.stop()
 
 else:
     st.subheader("✏️ Masukkan Data Secara Manual")
-
-if input_mode == "Upload CSV" and data.isnull().any().any():
-    st.warning("⚠️ Data mengandung nilai kosong. Pastikan data sudah bersih atau gunakan template yang sesuai.")
 
     # Semua fitur yang dibutuhkan model
     gender = st.selectbox("Gender", ["Male", "Female"])
