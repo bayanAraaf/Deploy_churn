@@ -16,7 +16,7 @@ Aplikasi ini memprediksi apakah seorang pelanggan **akan churn atau tidak** berd
 Model terbaik yang digunakan adalah **Random Forest** dengan performa tinggi pada data pelatihan.  
 Upload data pelanggan baru atau masukkan data secara manual untuk melihat hasil prediksi.
 """)
-
+st.markdown('Untuk Yang Mau Upload CSV Wajib Data Bersih Dan Bukan Data Mentah')
 
 # ===========================
 # 2. Load Model (versi aman untuk deploy)
