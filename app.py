@@ -4,7 +4,7 @@
 import streamlit as st
 import pandas as pd
 import joblib
-
+from transformers import TelcoCleaner  # pastikan file transformers.py ada di folder yang sama
 # ===========================
 # 1. Judul & Deskripsi
 # ===========================
@@ -58,6 +58,9 @@ if input_mode == "Upload CSV":
 
 else:
     st.subheader("✏️ Masukkan Data Secara Manual")
+
+if input_mode == "Upload CSV" and data.isnull().any().any():
+    st.warning("⚠️ Data mengandung nilai kosong. Pastikan data sudah bersih atau gunakan template yang sesuai.")
 
     # Semua fitur yang dibutuhkan model
     gender = st.selectbox("Gender", ["Male", "Female"])
